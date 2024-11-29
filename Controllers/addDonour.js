@@ -14,7 +14,8 @@ const addDonour = async(req, res, next)=>{
         res.redirect('donour/forms');
     }
     else {
-        let rand = Math.floor(Math.random() * 10000);
+        let randNum = Math.floor(Math.random() * 1000000);
+        let rand = String(randNum).padStart(6, '0');
         try {
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
