@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const addDonourConroller = require('../Controllers/addDonour')
-const addDonourForm = require('../Controllers/donourRegisterform')
-const otpValidateController = require('../Controllers/otpValidate')
-const viewDonourController = require('../Controllers/viewDonour')
-const logincontroller = require('../Controllers/loginControl')
-const otpForm = require('../Controllers/otpForm')
+const addDonourConroller = require('../Controllers/DonourControllers/addDonour')
+const viewDonourProfile = require('../Controllers/DonourControllers/viewDonourProfile')
+const addDonourForm = require('../Controllers/DonourControllers/donourRegisterform')
+const otpValidateController = require('../Controllers/DonourControllers/otpValidate')
+const viewDonourController = require('../Controllers/DonourControllers/viewDonour')
+const logincontroller = require('../Controllers/DonourControllers/loginControl')
+const loginForm = require('../Controllers/DonourControllers/loginForm')
+const otpForm = require('../Controllers/DonourControllers/otpForm')
 const AppError = require('../Utils/AppError')
 const AsyncWrap = require('../Utils/AsyncWrap')
 
@@ -17,6 +19,8 @@ router.post("/", AsyncWrap(addDonourConroller))
 router.get("/register", otpForm)
 router.post("/register", AsyncWrap(otpValidateController))
 router.post("/login", logincontroller)
+router.get("/login", loginForm)
+router.get("/profile", authControl, viewDonourProfile)
 router.get("/view", viewDonourController)
 
 module.exports = router

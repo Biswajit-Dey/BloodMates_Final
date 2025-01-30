@@ -1,5 +1,5 @@
-const Donour = require('../Models/donourModel')
-const NewID = require('../Models/NewID')
+const Donour = require('../../Models/donourModel')
+const NewID = require('../../Models/NewID')
 const nodemailer = require('nodemailer');
 
 const addDonour = async(req, res, next)=>{

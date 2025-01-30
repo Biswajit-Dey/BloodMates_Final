@@ -1,4 +1,4 @@
-const Donour = require('../Models/donourModel')
+const Donour = require('../../Models/donourModel')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
@@ -33,12 +33,14 @@ const authController = async (req, res, next)=>{
             httpOnly: true
         });
         console.log(`token = ${token}`);
-        res.send("login successful");
+        res.redirect('/donour/profile');
+        
        }
        else{
         //req.flash("fail","Email or Password mismatched");
         res.clearCookie('Bearer');
-        res.send("Email or password incorrect")
+        req.flash("fail","Email or password incorrect")
+        res.redirect('/donour/login')
        }
     }
 }

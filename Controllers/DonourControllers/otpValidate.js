@@ -1,7 +1,7 @@
-const Donour = require('../Models/donourModel')
-const NewID = require('../Models/NewID')
-const AppError = require('../Utils/AppError')
-const AsyncWrap = require('../Utils/AsyncWrap')
+const Donour = require('../../Models/donourModel')
+const NewID = require('../../Models/NewID')
+const AppError = require('../../Utils/AppError')
+const AsyncWrap = require('../../Utils/AsyncWrap')
 
 const validateOtp = async (req, res) => {
     const value = req.body.otp;
