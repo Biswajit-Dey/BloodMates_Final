@@ -13,6 +13,7 @@ const flash = require("connect-flash")
 const nodemailer = require('nodemailer');
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
+app.use(cookieParser())
 app.use(flash())
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

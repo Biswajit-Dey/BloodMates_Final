@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const addDonourConroller = require('../Controllers/DonourControllers/addDonour')
 const viewDonourProfile = require('../Controllers/DonourControllers/viewDonourProfile')
+const donourProfileController = require('../Controllers/DonourControllers/donourProfileController')
 const addDonourForm = require('../Controllers/DonourControllers/donourRegisterform')
 const otpValidateController = require('../Controllers/DonourControllers/otpValidate')
 const viewDonourController = require('../Controllers/DonourControllers/viewDonour')
@@ -21,6 +22,7 @@ router.post("/register", AsyncWrap(otpValidateController))
 router.post("/login", logincontroller)
 router.get("/login", loginForm)
 router.get("/profile", authControl, viewDonourProfile)
+router.post("/profile", donourProfileController)
 router.get("/view", viewDonourController)
 
 module.exports = router

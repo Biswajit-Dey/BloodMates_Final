@@ -19,11 +19,33 @@ const donourSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    bloodGroup:{
-        type: String
+    marital : {
+        type : String,
+        enum: ['single', 'married', 'divorced', 'widowed']
     },
-    address:{
-        type: String
+    age : {
+        type : Number
+    },
+    phone : {
+        type : String
+    },
+    bloodGroup:{
+        type: String,
+        enum: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']
+    },
+    address: {
+        location: String,
+        pincode: {
+            type: String,
+            validate: {
+                validator: function(v) {
+                    return /^\d{6}$/.test(v);  //Validation for 6 digit pincode
+                },
+                message: props => `${props.value} is not a valid pincode!`
+            }
+        },
+        district: String,
+        state: String
     }
 })
 

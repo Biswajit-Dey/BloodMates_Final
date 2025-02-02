@@ -3,17 +3,17 @@ const cookieParser = require('cookie-parser');
 const flash = require("connect-flash")
 const User=require('../Models/donourModel')
 
+
 const authMiddleware = async(req, res, next) => {
     try {
-      const token = req.cookies['Bearer'];
-      console.log(token);
+      const token = req.cookies.Bearer;
       if (!token) {
         //req.flash("fail","you need to login first");
         res.send("Login token not found")
       } else {
         const validate = jwt.verify(token, process.env.JWT_SECRET);
         req.user=await User.findById(validate.userid)
-        console.log(`validate ${validate}`);
+        console.log(`validate ${validate.email}`);
         next();
       }
     } catch (err) {

@@ -32,7 +32,7 @@ const authController = async (req, res, next)=>{
             expires: new Date(Date.now() + 3600000),
             httpOnly: true
         });
-        console.log(`token = ${token}`);
+        console.log(`token generated in DonourControllers/loginControl`);
         res.redirect('/donour/profile');
         
        }
