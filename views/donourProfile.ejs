@@ -123,15 +123,15 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">First name</label>
-                                        <input type="text" class="form-control mb-1" value="<%= donour.firstname %>" readonly>
+                                        <input type="text" class="form-control mb-1" name="fname" value="<%= donour.firstname %>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" value="<%= donour.lastname %>" readonly>
+                                        <input type="text" class="form-control" name="lname" value="<%= donour.lastname %>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" value="<%= donour.email %>" readonly>
+                                        <input type="text" class="form-control mb-1" name="email" value="<%= donour.email %>" readonly>
                                         <!-- <div class="alert alert-warning mt-3">
                                         Your email is not confirmed. Please check your inbox.<br>
                                         <a href="javascript:void(0)">Resend confirmation</a>
@@ -185,8 +185,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label">Address</label>
-                                                <textarea class="form-control" rows="2"
-                                                    placeholder="Type Here" name="address[location]"></textarea>
+                                                <input type="text" class="form-control" name="address[location]"
+                                                placeholder="House, Area">
                                             </div>
                                         </div>
 

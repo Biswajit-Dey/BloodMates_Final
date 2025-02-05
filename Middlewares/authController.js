@@ -1,6 +1,4 @@
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
-const flash = require("connect-flash")
 const User=require('../Models/donourModel')
 
 

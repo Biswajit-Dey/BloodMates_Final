@@ -35,15 +35,7 @@ const donourSchema = new mongoose.Schema({
     },
     address: {
         location: String,
-        pincode: {
-            type: String,
-            validate: {
-                validator: function(v) {
-                    return /^\d{6}$/.test(v);  //Validation for 6 digit pincode
-                },
-                message: props => `${props.value} is not a valid pincode!`
-            }
-        },
+        pincode: String,
         district: String,
         state: String
     }

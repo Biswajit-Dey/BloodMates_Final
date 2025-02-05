@@ -1,13 +1,46 @@
+const bcrypt = require('bcrypt');
 const Donour = require('../../Models/donourModel')
 
-const editDonourProfile = (req, res, next)=>{
-    const {marital, phone, blood, age, address} = req.body;
-    console.log(marital)
-    console.log(phone)
-    console.log(blood)
-    console.log(age)
-    console.log(address)
-    res.send(obj)
+const editDonourProfile = async (req, res, next)=>{
+    const obj = req.body;
+    const {email, marital, phone, blood, age, address, currpass, newpass, repass} = req.body;
+    const donour = await Donour.findOne({email})
+    const dpass = donour.password;
+
+    if(newpass.length !== 0){
+        console.log(`Donour password at line 11 ${donour.password} curpass = ${currpass}`);
+        const valid = await bcrypt.compare(currpass, donour.password);
+        console.log(`line 12 passed`);
+        if(valid && (newpass === repass)){
+            donour.address = address;
+            donour.marital = marital;
+            donour.phone = phone;
+            donour.blood = blood;
+            donour.age = age;
+            const salt = await bcrypt.genSalt(10);
+            const newPassword = await bcrypt.hash(newpass, salt);
+            donour.password = newPassword;
+
+            await donour.save()
+            console.log(`New password ${newpass}, hash = ${newPassword}`);
+        }
+        else{
+            res.send("Password didn't match")
+        }
+    }    
+    else{
+        console.log(`No new password found`)
+        donour.address = address;
+        donour.marital = marital;
+        donour.phone = phone;
+        donour.blood = blood;
+        donour.age = age;
+        donour.password = dpass;
+
+
+        await donour.save()
+    }
+    res.send(obj);
 }
 
 module.exports =  editDonourProfile

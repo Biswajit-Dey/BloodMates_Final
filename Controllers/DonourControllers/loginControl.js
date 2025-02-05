@@ -8,8 +8,8 @@ const authController = async (req, res, next)=>{
     const password = req.body.password;    
     
     const user = await Donour.findOne({email});
-    const userid = user.id;
-    console.log(userid);
+    // const userid = user.id;
+    // console.log(userid);
     if(!user){
         res.clearCookie('Bearer');
         //req.flash("fail","Email or Password mismatched");
@@ -20,6 +20,7 @@ const authController = async (req, res, next)=>{
        if(valid){
         const firstname = user.firstname;
         const lasttname = user.lastname;
+        const userid = user.id;
         const token = jwt.sign({
             userid: userid,
             name: `${firstname} ${lasttname}`,

@@ -5,7 +5,7 @@ const viewDonourProfile = async(req, res)=>{
     const token = req.cookies.Bearer;
     const validate = jwt.verify(token, process.env.JWT_SECRET);
     const donour = await Donour.findOne({email: validate.email});
-    console.log(donour)
+    console.log(`from viewDonourController ${donour}`)
     res.render('donourProfile',{donour});
 }
 
