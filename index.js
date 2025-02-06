@@ -12,7 +12,9 @@ const DonourRoute = require('./Routes/donourRoutes')
 const flash = require("connect-flash")
 const nodemailer = require('nodemailer');
 const session = require('express-session')
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const cron = require("node-cron");
+const checkBlood = require('./Middlewares/checkBloodStock');
 app.use(cookieParser())
 app.use(flash())
 app.set('view engine', 'ejs');
@@ -57,6 +59,9 @@ app.use((err, req, res, next) => {
     const { message = "Oh no Error!!!", status = 500 } = err;
     res.status(status).send(`${message}`);  
   })
+//checking blood every minute
+  cron.schedule("* * * * *",checkBlood
+  );
 app.listen(port,()=>{
     console.log(`Server running on port ${port}`)
 })
