@@ -9,6 +9,7 @@ const mongodbConnection = require('./Config/conn');
 const AppError = require('./Utils/AppError')
 const AsyncWrap = require('./Utils/AsyncWrap')
 const DonourRoute = require('./Routes/donourRoutes')
+const HospitalRoute = require('./Routes/hospitalRoutes')
 const flash = require("connect-flash")
 const nodemailer = require('nodemailer');
 const session = require('express-session')
@@ -54,6 +55,7 @@ app.get("/", (req, res)=>{
     res.render('index')
 })
 app.use("/donour", DonourRoute)
+app.use("/hospital", HospitalRoute)
 
 app.use((err, req, res, next) => {
     const { message = "Oh no Error!!!", status = 500 } = err;
