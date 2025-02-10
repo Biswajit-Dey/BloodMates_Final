@@ -14,6 +14,7 @@ const flash = require("connect-flash")
 const nodemailer = require('nodemailer');
 const session = require('express-session')
 const cookieParser = require('cookie-parser');
+
 const cron = require("node-cron");
 const checkBlood = require('./Middlewares/checkBloodStock');
 app.use(cookieParser())
@@ -54,6 +55,7 @@ app.use((req, res, next) => {
 app.get("/", (req, res)=>{
     res.render('index')
 })
+
 app.use("/donour", DonourRoute)
 app.use("/hospital", HospitalRoute)
 

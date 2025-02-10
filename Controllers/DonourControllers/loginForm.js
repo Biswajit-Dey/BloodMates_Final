@@ -1,5 +1,5 @@
 const loginForm = (req, res)=>{
-    res.render('loginDonour');
+    res.render('loginForm');
 }
 
 module.exports = loginForm
