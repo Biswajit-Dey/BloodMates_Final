@@ -383,7 +383,7 @@
                 </tr>
               </table>
             </div>
-            <button onclick="openModal()">Profile</button>
+            <button onclick="openModal()">Request</button>
           </div>
 
           <div class="overlay" id="overlay" onclick="closeModal()"></div>
@@ -434,7 +434,7 @@
                 </tr>
               </table>
             </div>
-            <button onclick="openModal()">Profile</button>
+            <button onclick="openModal()">Request</button>
           </div>
 
           <div class="card">
@@ -453,7 +453,7 @@
                 </tr>
               </table>
             </div>
-            <button onclick="openModal()">Profile</button>
+            <button onclick="openModal()">Request</button>
           </div>
 
 
@@ -473,7 +473,7 @@
                 </tr>
               </table>
             </div>
-            <button onclick="openModal()">Profile</button>
+            <button onclick="openModal()">Request</button>
           </div>
 
           <div class="card">
@@ -492,7 +492,7 @@
                 </tr>
               </table>
             </div>
-            <button onclick="openModal()">Profile</button>
+            <button onclick="openModal()">Request</button>
           </div>
           <div class="card">
             <img src="./assets/BloodPhotos/O-.png">
@@ -510,7 +510,7 @@
                 </tr>
               </table>
             </div>
-            <button onclick="openModal()">Profile</button>
+            <button onclick="openModal()">Request</button>
           </div>
           <div class="card">
             <img src="./assets/BloodPhotos/AB+.png">
@@ -528,7 +528,7 @@
                 </tr>
               </table>
             </div>
-            <button onclick="openModal()">Profile</button>
+            <button onclick="openModal()">Request</button>
           </div>
           <div class="card">
             <img src="./assets/BloodPhotos/AB-.png">
@@ -546,7 +546,7 @@
                 </tr>
               </table>
             </div>
-            <button onclick="openModal()">Profile</button>
+            <button onclick="openModal()">Request</button>
           </div>
         </div>
 
@@ -611,12 +611,35 @@
       }
       
       function submitForm() {
-        let date = document.getElementById("donationDate").value;
-        let bloodGroup = document.getElementById("bloodGroup").value;
-        let amount = document.getElementById("bloodAmount").value;
-        alert(`Donation Details:\nDate: ${date}\nBlood Group: ${bloodGroup}\nAmount: ${amount}`);
-        closeModal();
-      }
+    let date = document.getElementById("donationDate").value;
+    let bloodGroup = document.getElementById("bloodGroup").value;
+    let amount = document.getElementById("bloodAmount").value;
+
+    let donationData = {
+        donationDate: date,
+        bloodGroup: bloodGroup,
+        bloodAmount: amount
+    };
+
+    // Send data to localhost:8000/hospital/donation
+    fetch("http://localhost:8000/hospital/donation", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(donationData)
+    })
+    .then(response => response.json()) // Convert response to JSON
+    .then(data => {
+        alert(`Response from server: ${JSON.stringify(data)}`);
+        closeModal(); // Close modal only after a successful response
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Failed to send data to the server.");
+    });
+}
+
     </script>
 
   </body>

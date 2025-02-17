@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
 dotenv.config();
+app.use(express.json());
 const port = process.env.PORT || 8000
 const mongodbConnection = require('./Config/conn');
 const AppError = require('./Utils/AppError')
@@ -64,7 +65,7 @@ app.use((err, req, res, next) => {
     res.status(status).send(`${message}`);  
   })
 //checking blood every minute
-  cron.schedule("* * * * *",checkBlood
+  cron.schedule("*/2 * * * *",checkBlood
   );
 app.listen(port,()=>{
     console.log(`Server running on port ${port}`)

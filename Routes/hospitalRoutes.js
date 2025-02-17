@@ -18,5 +18,9 @@ router.get('/register',registerHospitalAutorityForm);
 router.get('/login',loginForm);
 router.post('/register',addUser)//hostpital autority registration
 router.post('/login',loginUser);//hospital autority login
+router.post("/donation", (req, res) => {
+    console.log("Received data:", req.body);
+    res.json({ message: "Donation received successfully!", receivedData: req.body });
+});
 
 module.exports = router
