@@ -1,8 +1,8 @@
-const User=require('../../Models/hospitalAutority');
+const Hospital=require('../../Models/hospitalAuthority');
 
 const loginUser=async (req, res) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await Hospital.findOne({ email });
   
     if (!user || user.password !== password) {
       return res.status(400).json({ message: "Invalid email or password" });

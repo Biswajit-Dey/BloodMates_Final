@@ -1,4 +1,4 @@
-const Hospital = require('../../Models/hospitalModel')
+const Hospital = require('../../Models/hospitalAuthority')
 
 const hospitalDashboard = (req, res)=>{
     res.render('hospitalDashboard')

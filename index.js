@@ -64,7 +64,7 @@ app.use((err, req, res, next) => {
     res.status(status).send(`${message}`);  
   })
 //checking blood every minute
-  cron.schedule("* * * * *",checkBlood
+  cron.schedule("*/2 * * * *",checkBlood
   );
 app.listen(port,()=>{
     console.log(`Server running on port ${port}`)

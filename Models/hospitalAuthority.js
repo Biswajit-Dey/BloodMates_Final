@@ -19,14 +19,30 @@ const hospitalSchema = new mongoose.Schema({
         required: true,
         unique: true      
     },
+    hospitalPhone1:{
+        type: String,
+        required: true,
+        unique: true      
+    },
+    hospitalPhone2:{
+        type: String,
+        required: true,
+        unique: true      
+    },
+    hospitalSuper:{
+        type: String,
+        required: true,
+        unique: true      
+    },
     password:{
         type: String,
         required: true
     },
-    address:{
-        location : String,
-        city : String,
-        district : String
+    address: {
+        location: String,
+        district: String,
+        state: String,
+        pincode: String
     },
     bloodRequests:[
         {

@@ -70,11 +70,47 @@
     <div class="container w-50 mt-3">
         <h2>Hospital Registration Form</h2>
         <form action="/hospital/register" method="post">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <label for="hname">Hospital Name</label>
+            <input type="text" id="hname" name="hname" required>
+
+            <label for="hreg">Registration</label>
+            <input type="text" id="hreg" name="hreg" required>
+
+            <label for="hemail">Email</label>
+            <input type="email" id="hemail" name="hemail" required>
+
+            <label for="hphone">Phone:</label>
+            <input type="phone" id="hphone" name="hphone" required>
+
+            <label for="h2phone">Alternate Phone:</label>
+            <input type="phone" id="h2phone" name="h2phone" required>
+
+            <label for="hsuper">Superintendent Name</label>
+            <input type="text" id="hsuper" name="hsuper" required>
+
+            <label for="hpass">Password</label>
+            <input type="text" id="hpass" name="hpass" required>
+
+            <div class="row">
+                <div class="col-12">
+                    <label for="inputAddress2" class="form-label">Address Line 1</label>
+                    <input type="text" class="form-control" id="inputAddress2" name="address[location]" placeholder="Apartment, locality">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="district" class="form-label">District</label>
+                    <input type="text" name="address[district]" class="form-control" id="district">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="state" class="form-label">State</label>
+                    <input type="text" class="form-control" name="address[state]" id="state">
+                  </div>
+                  <div class="col-md-2">
+                    <label for="pin" class="form-label">PIN</label>
+                    <input type="text" class="form-control" name="address[pincode]" id="pin">
+                  </div>
+
+            </div>
 
 
             <button type="submit">Register</button>
