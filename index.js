@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
 dotenv.config();
+app.use(express.json());
 const port = process.env.PORT || 8000
 const mongodbConnection = require('./Config/conn');
 const AppError = require('./Utils/AppError')
