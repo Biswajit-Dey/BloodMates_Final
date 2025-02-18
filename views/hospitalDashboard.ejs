@@ -6,11 +6,8 @@
     <meta charset="UTF-8" />
     <title> Dashboard | BloodMate</title>
 
-    
-    <style>
-    
-    
 
+    <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
       * {
@@ -331,9 +328,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js" ></script>
-    <script src="/socket.io/socket.io.js" ></script>
-    <script defer src="/script.js" ></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script defer src="/script.js"></script>
   </head>
 
   <body>
@@ -605,42 +602,44 @@
           </div>
         </section>
       </section>
+      <!-- addmap -->
+      <div id="map" style="height: 50vh;"></div>
 
-</div>
-    <!-- addmap -->
-    <div id="map" style="height: 50vh;"></div>
-  
-    <script>
+      <script>
         var map = L.map('map').setView([20, 78], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
+          attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
         var markers = {};
         var socket = io();
 
         socket.on("broadcastLocation", (users) => {
-        for (let id in users) {
+          for (let id in users) {
             let user = users[id];
 
             // If a new user is detected, add a marker
             if (!markers[id]) {
-                markers[id] = L.marker([user.latitude, user.longitude]).addTo(map)
-                    .bindPopup(`User ${id}`).openPopup();
+              markers[id] = L.marker([user.latitude, user.longitude]).addTo(map)
+                .bindPopup(`User ${id}`).openPopup();
             } else {
-                // Update position if user already exists
-                markers[id].setLatLng([user.latitude, user.longitude]);
+              // Update position if user already exists
+              markers[id].setLatLng([user.latitude, user.longitude]);
             }
-        }
-        for (let id in markers) {
-                if (!users[id]) {
-                    map.removeLayer(markers[id]);
-                    delete markers[id];
-                }
+          }
+          for (let id in markers) {
+            if (!users[id]) {
+              map.removeLayer(markers[id]);
+              delete markers[id];
             }
-    });
-    </script>
-    <!--  -->
+          }
+        });
+      </script>
+      <!--  -->
+
+    </div>
+
+
 
     <script src="./script.js"></script>
     <script>
@@ -648,41 +647,41 @@
         document.getElementById("modal").style.display = "block";
         document.getElementById("overlay").style.display = "block";
       }
-      
+
       function closeModal() {
         document.getElementById("modal").style.display = "none";
         document.getElementById("overlay").style.display = "none";
       }
-      
+
       function submitForm() {
-    let date = document.getElementById("donationDate").value;
-    let bloodGroup = document.getElementById("bloodGroup").value;
-    let amount = document.getElementById("bloodAmount").value;
+        let date = document.getElementById("donationDate").value;
+        let bloodGroup = document.getElementById("bloodGroup").value;
+        let amount = document.getElementById("bloodAmount").value;
 
-    let donationData = {
-        donationDate: date,
-        bloodGroup: bloodGroup,
-        bloodAmount: amount
-    };
+        let donationData = {
+          donationDate: date,
+          bloodGroup: bloodGroup,
+          bloodAmount: amount
+        };
 
-    // Send data to localhost:8000/hospital/donation
-    fetch("http://localhost:80/hospital/donation", {
-        method: "POST",
-        headers: {
+        // Send data to localhost:8000/hospital/donation
+        fetch("http://localhost:80/hospital/donation", {
+          method: "POST",
+          headers: {
             "Content-Type": "application/json"
-        },
-        body: JSON.stringify(donationData)
-    })
-    .then(response => response.json()) // Convert response to JSON
-    .then(data => {
-        alert(`Response from server: ${JSON.stringify(data)}`);
-        closeModal(); // Close modal only after a successful response
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("Failed to send data to the server.");
-    });
-}
+          },
+          body: JSON.stringify(donationData)
+        })
+          .then(response => response.json()) // Convert response to JSON
+          .then(data => {
+            alert(`Response from server: ${JSON.stringify(data)}`);
+            closeModal(); // Close modal only after a successful response
+          })
+          .catch(error => {
+            console.error("Error:", error);
+            alert("Failed to send data to the server.");
+          });
+      }
 
     </script>
 
