@@ -3,6 +3,12 @@ const dotenv = require('dotenv');
 const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
+const http = require("http");
+const socketIo = require("socket.io");
+//create server
+const server = http.createServer(app);
+const io = socketIo(server);
+
 dotenv.config();
 app.use(express.json());
 const port = process.env.PORT || 8000
@@ -64,9 +70,28 @@ app.use((err, req, res, next) => {
     const { message = "Oh no Error!!!", status = 500 } = err;
     res.status(status).send(`${message}`);  
   })
+
+  //socket setup for map
+  let users = {}; // Store user locations
+
+io.on("connection", (socket) => {
+    console.log("New user connected: " + socket.id);
+
+    socket.emit("broadcastLocation", users);
+    
+    socket.on("updateLocation", (data) => {
+        users[socket.id] = data;
+        io.emit("broadcastLocation", users);
+    });
+
+    socket.on("disconnect", () => {
+        delete users[socket.id];
+        io.emit("broadcastLocation", users);
+    });
+});
 //checking blood every minute
   cron.schedule("*/2 * * * *",checkBlood
   );
-app.listen(port,()=>{
+server.listen(port,()=>{
     console.log(`Server running on port ${port}`)
 })
