@@ -1,7 +1,6 @@
 const Donour = require('../../Models/donourModel')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser')
 
 const authController = async (req, res, next)=>{
     const email = req.body.email;

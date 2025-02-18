@@ -1,5 +1,4 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
+const mongoose = require('mongoose');
 
 const hospitalSchema = new mongoose.Schema({
     hospitalName:{
@@ -18,7 +17,7 @@ const hospitalSchema = new mongoose.Schema({
     hospitalPhone1:{
         type: String,
         required: true,
-        unique: true      
+        unique: true     
     },
     hospitalPhone2:{
         type: String,
@@ -34,32 +33,17 @@ const hospitalSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    otp:{
+        type : Number
+    },
     address: {
         location: String,
         district: String,
         state: String,
         pincode: String
-    },
-    bloodRequests:[
-        {
-            bloodType:{
-                type : String,
-            },
-            quantity:{
-                type : Number,
-            },
-            location:{
-                type : String,
-            }
-        }
-    ]
-})
-
-hospitalSchema.pre("save", async function () {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    }
 });
 
-const Hospital = mongoose.model("Hospital", hospitalSchema);
+const TempHospital = mongoose.model("TempHospital", hospitalSchema);
 
-module.exports = Hospital
+module.exports = TempHospital

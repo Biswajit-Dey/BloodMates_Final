@@ -40,7 +40,7 @@ const editDonourProfile = async (req, res, next)=>{
 
         await donour.save()
     }
-    res.send(obj);
+    res.redirect('/donour/profile');
 }
 
 module.exports =  editDonourProfile
