@@ -12,8 +12,8 @@
     let role = document.getElementById("role").value;
     let form = document.getElementById("loginForm");
 
-    if (role === "Donor") {
-        form.action = "/donor/login";
+    if (role === "Donour") {
+        form.action = "/donour/login";
     } else if (role === "Hospital Authority") {
         form.action = "/hospital/login";
     }
@@ -96,9 +96,9 @@
         <h2>Donor Login</h2>
         <form id="loginForm" method="post" onsubmit="validateForm(event)">
 
-            <select name="role" id="role" required>
-                <option value="">Please Select</option>
-                <option value="Donor">Donor</option>
+            <select name="role" id="role" class="form-select" required>
+                <option disabled selected value="">---Select User---</option>
+                <option value="Donour">Donour</option>
                 <option value="Hospital Authority">Hospital Authority</option>
             </select>
 
