@@ -6,7 +6,11 @@
     <meta charset="UTF-8" />
     <title> Dashboard | BloodMate</title>
 
+    
     <style>
+    
+    
+
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
       * {
@@ -325,6 +329,11 @@
     <!-- <link rel="stylesheet" href="style.css" /> -->
     <!-- Font Awesome Cdn Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js" ></script>
+    <script src="/socket.io/socket.io.js" ></script>
+    <script defer src="/script.js" ></script>
   </head>
 
   <body>
@@ -596,7 +605,42 @@
           </div>
         </section>
       </section>
-    </div>
+
+</div>
+    <!-- addmap -->
+    <div id="map" style="height: 50vh;"></div>
+  
+    <script>
+        var map = L.map('map').setView([20, 78], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var markers = {};
+        var socket = io();
+
+        socket.on("broadcastLocation", (users) => {
+        for (let id in users) {
+            let user = users[id];
+
+            // If a new user is detected, add a marker
+            if (!markers[id]) {
+                markers[id] = L.marker([user.latitude, user.longitude]).addTo(map)
+                    .bindPopup(`User ${id}`).openPopup();
+            } else {
+                // Update position if user already exists
+                markers[id].setLatLng([user.latitude, user.longitude]);
+            }
+        }
+        for (let id in markers) {
+                if (!users[id]) {
+                    map.removeLayer(markers[id]);
+                    delete markers[id];
+                }
+            }
+    });
+    </script>
+    <!--  -->
 
     <script src="./script.js"></script>
     <script>
@@ -618,11 +662,11 @@
     let donationData = {
         donationDate: date,
         bloodGroup: bloodGroup,
-        bloodAmount: amount
+        bloodAmount: amount,
     };
 
     // Send data to localhost:8000/hospital/donation
-    fetch("http://localhost:80/hospital/donation", {
+    fetch("http://localhost:8000/hospital/donation", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
