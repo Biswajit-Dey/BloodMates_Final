@@ -3,7 +3,7 @@ const Donour = require('../../Models/donourModel')
 
 const editDonourProfile = async (req, res, next)=>{
     const obj = req.body;
-    const {email, marital, phone, blood, age, address, currpass, newpass, repass} = req.body;
+    const {email, marital, phone, blood, age, location, district, state, pincode, currpass, newpass, repass} = req.body;
     const donour = await Donour.findOne({email})
     const dpass = donour.password;
 
@@ -12,10 +12,13 @@ const editDonourProfile = async (req, res, next)=>{
         const valid = await bcrypt.compare(currpass, donour.password);
         console.log(`line 12 passed`);
         if(valid && (newpass === repass)){
-            donour.address = address;
+            donour.location = location;
+            donour.district = district;
+            donour.state = state;
+            donour.pincode = pincode;
             donour.marital = marital;
             donour.phone = phone;
-            donour.blood = blood;
+            donour.bloodGroup = blood;
             donour.age = age;
             const salt = await bcrypt.genSalt(10);
             const newPassword = await bcrypt.hash(newpass, salt);
@@ -30,10 +33,13 @@ const editDonourProfile = async (req, res, next)=>{
     }    
     else{
         console.log(`No new password found`)
-        donour.address = address;
+        donour.pincode = pincode;
+        donour.location = location;
+        donour.district = district;
+        donour.state = state;
         donour.marital = marital;
         donour.phone = phone;
-        donour.blood = blood;
+        donour.bloodGroup = blood;
         donour.age = age;
         donour.password = dpass;
 

@@ -2,12 +2,12 @@ const Donour = require('../../Models/donourModel')
 const NewID = require('../../Models/NewID')
 const nodemailer = require('nodemailer');
 
-const addDonour = async(req, res, next)=>{
+const addDonour = async (req, res, next) => {
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
     const password = req.body.password;
-    const exist = await Donour.findOne({email})
+    const exist = await Donour.findOne({ email })
 
     if (exist) {
         req.flash("fail", "Account already exist");
@@ -39,17 +39,17 @@ const addDonour = async(req, res, next)=>{
                 }
             });
             console.log(`OTP sent to ${email}`)
-            const existOTP = await NewID.findOne({email})
-            if(existOTP){
+            const existOTP = await NewID.findOne({ email })
+            if (existOTP) {
                 const id = existOTP.id;
                 await NewID.findByIdAndDelete(id);
             }
             const user = new NewID({
-                firstname : fname,
-                lastname : lname,
-                email : email,
-                otp : rand,
-                password : password
+                firstname: fname,
+                lastname: lname,
+                email: email,
+                otp: rand,
+                password: password
             })
             await user.save();
 
@@ -66,4 +66,4 @@ const addDonour = async(req, res, next)=>{
     }
 }
 
-module.exports =  addDonour 
+module.exports = addDonour 

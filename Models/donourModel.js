@@ -21,7 +21,7 @@ const donourSchema = new mongoose.Schema({
     },
     marital : {
         type : String,
-        enum: ['single', 'married', 'divorced', 'widowed']
+        // enum: ['single', 'married', 'divorced', 'widowed']
     },
     age : {
         type : Number
@@ -31,20 +31,20 @@ const donourSchema = new mongoose.Schema({
     },
     bloodGroup:{
         type: String,
-        enum: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']
+        // enum: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']
     },
-    address: {
-        location: String,
-        pincode: String,
-        district: String,
-        state: String
-    }
+    
+    location: String,
+    pincode: String,
+    district: String,
+    state: String
+
 })
 
-donourSchema.pre("save", async function () {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-});
+// donourSchema.pre("save", async function () {
+//     const salt = await bcrypt.genSalt(10);
+//     this.password = await bcrypt.hash(this.password, salt);
+// });
 
 const Donour = mongoose.model("Donour", donourSchema);
 

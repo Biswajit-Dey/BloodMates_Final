@@ -15,6 +15,7 @@ const loginUser = require('../Controllers/HospitalControllers/loginControl');
 const loginForm = require('../Controllers/HospitalControllers/loginForm');
 const otpForm = require('../Controllers/HospitalControllers/otpForm');
 const hospitalAddition = require('../Controllers/HospitalControllers/otpValidate');
+const bloodReqController = require('../Controllers/HospitalControllers/bloodRequestControl');
 
 router.get('/dashboard', viewDashboardController)
 router.get('/register',registerHospitalAutorityForm);
@@ -23,9 +24,6 @@ router.get('/otpform',otpForm);
 router.post('/addition',hospitalAddition)//hostpital autority registration
 router.post('/register',addUser)//hostpital autority registration
 router.post('/login',loginUser);//hospital autority login
-router.post("/donation", (req, res) => {
-    console.log("Received data:", req.body);
-    res.json({ message: "Donation received successfully!", receivedData: req.body });
-});
+router.post("/donation", bloodReqController);
 
 module.exports = router

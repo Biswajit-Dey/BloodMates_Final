@@ -2,6 +2,7 @@ const Donour = require('../../Models/donourModel')
 const NewID = require('../../Models/NewID')
 const AppError = require('../../Utils/AppError')
 const AsyncWrap = require('../../Utils/AsyncWrap')
+const bcrypt = require('bcrypt')
 
 const validateOtp = async (req, res) => {
     const value = req.body.otp;
@@ -13,7 +14,9 @@ const validateOtp = async (req, res) => {
     const id = temp.id;
     const firstname = temp.firstname;
     const lastname = temp.lastname;
-    const password = temp.password;
+    const pass = temp.password;
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(pass, salt);
     console.log(`0 ${id}`)
     console.log(`actual OTP: ${actualOTP}, OTP Given: ${value}, user:${firstname}`);
     if (actualOTP == value) {

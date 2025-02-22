@@ -12,7 +12,8 @@ const authController = async (req, res, next)=>{
     if(!user){
         res.clearCookie('Bearer');
         //req.flash("fail","Email or Password mismatched");
-        res.send("Email or password incorrect")
+        req.flash("fail", "User not found")
+        res.redirect("/donour/login")
     }
     else{
        const valid = await bcrypt.compare(password, user.password);
