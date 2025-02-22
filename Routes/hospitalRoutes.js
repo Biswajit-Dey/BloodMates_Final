@@ -16,8 +16,9 @@ const loginForm = require('../Controllers/HospitalControllers/loginForm');
 const otpForm = require('../Controllers/HospitalControllers/otpForm');
 const hospitalAddition = require('../Controllers/HospitalControllers/otpValidate');
 const bloodReqController = require('../Controllers/HospitalControllers/bloodRequestControl');
+const hospitalAuthControl = require('../Middlewares/hospitalAuthControl');
 
-router.get('/dashboard', viewDashboardController)
+router.get('/dashboard',hospitalAuthControl, viewDashboardController)
 router.get('/register',registerHospitalAutorityForm);
 router.get('/login',loginForm);
 router.get('/otpform',otpForm);
