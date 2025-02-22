@@ -2,6 +2,7 @@ const Hospital = require('../../Models/hospitalAuthority')
 const BloodStock = require('../../Models/bloodStockModel')
 const jwt = require('jsonwebtoken')
 const cron = require("node-cron");
+const nodemailer = require('nodemailer');
 const THRESHOLD=10;
 
 const hospitalDashboard = async(req, res)=>{
@@ -24,11 +25,34 @@ const hospitalDashboard = async(req, res)=>{
         
         Object.entries(bloodStock.bloodGroups).forEach(([group, quantity]) => {
             if (quantity < THRESHOLD) {
-                console.log(`WARNING: ${group} blood stock is below threshold in hospital: ${hospital.hospitalName}`);
-            }
-        });
-    });
-    
+                // console.log(`WARNING: ${group} blood stock is below threshold in hospital: ${hospital.hospitalName}`);
+
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.SENDER_MAIL,
+                        pass: process.env.MAIL_PASS
+                    }
+                });
+        
+                var mailOptions = {
+                    from: process.env.SENDER_MAIL,
+                    to: hospital.hospitalEmail,
+                    subject: 'Urgent: Blood Stock Running Low',
+                    text: `WARNING: ${group} blood stock is below threshold in hospital: ${hospital.hospitalName}`
+                };
+        
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log("Error sending email:", error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+        
+            }      
+        });   
+})
 }
 
 module.exports = hospitalDashboard;
