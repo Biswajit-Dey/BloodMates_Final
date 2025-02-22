@@ -10,6 +10,7 @@ const authMiddleware = async(req, res, next) => {
         res.send("Login token not found")
       } else {
         const validate = jwt.verify(token, process.env.JWT_SECRET);
+        req.hospitalId=validate.userid;
         // req.user=await User.findById(validate.userid)
         // console.log(`validate ${validate.email}`);
         next();

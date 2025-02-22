@@ -2,20 +2,17 @@ const BloodStock = require("../../Models/bloodStockModel");
 
 const bloodStock= async (req, res) => {
     try {
-      const { bloodType, unitsAvailable, threshold } = req.body;
-      let blood = await BloodStock.findOne({ bloodType });
-  
-      if (blood) {
-        blood.unitsAvailable = unitsAvailable;
-        blood.threshold = threshold;
-      } else {
-        blood = new BloodStock({ bloodType, unitsAvailable, threshold });
-      }
-  
-      await blood.save();
-      res.json({ message: "Blood stock updated", blood });
+        const { bloodGroups } = req.body;
+        let bloodStock = await BloodStock.findOne({ hospital: req.hospitalId });
+        if (!bloodStock) {
+            bloodStock = new BloodStock({ hospital: req.hospitalId, bloodGroups });
+        } else {
+            bloodStock.bloodGroups = bloodGroups;
+        }
+        await bloodStock.save();
+        res.json({ message: 'Blood stock updated successfully' });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        res.status(500).json({ message: 'Error updating blood stock', error });
     }
   };
   

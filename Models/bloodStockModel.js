@@ -1,9 +1,16 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const bloodStockSchema = new mongoose.Schema({
+    hospital: { type: mongoose.Schema.Types.ObjectId, ref: 'Hospital', required: true },
+    bloodGroups: {
+        A_positive: { type: Number, default: 0 },
+        A_negative: { type: Number, default: 0 },
+        B_positive: { type: Number, default: 0 },
+        B_negative: { type: Number, default: 0 },
+        AB_positive: { type: Number, default: 0 },
+        AB_negative: { type: Number, default: 0 },
+        O_positive: { type: Number, default: 0 },
+        O_negative: { type: Number, default: 0 }
+    },
+}, { timestamps: true });
 
-const BloodStockSchema = new mongoose.Schema({
-  bloodType: { type: String, required: true, unique: true }, // A+, B-, etc.
-  unitsAvailable: { type: Number, required: true }, // Number of units available
-  threshold: { type: Number, required: true,default:10 }, // Minimum required units
-});
-
-module.exports = mongoose.model("BloodStock", BloodStockSchema);
+module.exports = mongoose.model('BloodStock', bloodStockSchema);

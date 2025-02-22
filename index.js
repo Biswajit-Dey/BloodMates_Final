@@ -22,7 +22,7 @@ const nodemailer = require('nodemailer');
 const session = require('express-session')
 const cookieParser = require('cookie-parser');
 
-const cron = require("node-cron");
+
 const checkBlood = require('./Middlewares/checkBloodStock');
 app.use(cookieParser())
 app.use(flash())
@@ -90,8 +90,6 @@ io.on("connection", (socket) => {
     });
 });
 //checking blood every minute
-  cron.schedule("*/2 * * * *",checkBlood
-  );
 server.listen(port,()=>{
     console.log(`Server running on port ${port}`)
 })
