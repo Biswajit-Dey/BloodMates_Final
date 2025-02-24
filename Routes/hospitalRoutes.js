@@ -17,6 +17,7 @@ const otpForm = require('../Controllers/HospitalControllers/otpForm');
 const hospitalAddition = require('../Controllers/HospitalControllers/otpValidate');
 const bloodReqController = require('../Controllers/HospitalControllers/bloodRequestControl');
 const hospitalAuthControl = require('../Middlewares/hospitalAuthControl');
+const bloodStock = require('../Controllers/HospitalControllers/bloodStock');
 
 router.get('/dashboard',hospitalAuthControl, viewDashboardController)
 router.get('/register',registerHospitalAutorityForm);
@@ -26,5 +27,6 @@ router.post('/addition',hospitalAddition)//hostpital autority registration
 router.post('/register',addUser)//hostpital autority registration
 router.post('/login',loginUser);//hospital autority login
 router.post("/donation", bloodReqController);
+router.post('/add-blood-stock',hospitalAuthControl,bloodStock)
 
 module.exports = router
