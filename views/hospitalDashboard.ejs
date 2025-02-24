@@ -666,7 +666,11 @@
     };
 
     // Send data to localhost:8000/hospital/donation
+<<<<<<< HEAD
     fetch("http://localhost/hospital/donation", {
+=======
+    fetch(`http://localhost:<%= port %>/hospital/donation`, {
+>>>>>>> e130d3eea219a0f6f41a06d81fccb040a8d460eb
         method: "POST",
         headers: {
             "Content-Type": "application/json"

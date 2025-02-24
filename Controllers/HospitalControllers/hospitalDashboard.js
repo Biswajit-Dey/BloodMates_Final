@@ -4,18 +4,19 @@ const jwt = require('jsonwebtoken')
 const cron = require("node-cron");
 const nodemailer = require('nodemailer');
 const THRESHOLD=10;
+const PORT=process.env.PORT;
 
 const hospitalDashboard = async(req, res)=>{
     // const token = req.cookies.Bearer;
     // const validate = jwt.verify(token, process.env.JWT_SECRET);
     // const hospital = await Hospital.findOne({hospitalEmail: validate.email});
     // console.log(`from hospitalDashboard ${hospital}`)
-    res.render('hospitalDashboard')
+    res.render('hospitalDashboard',{port:PORT})
     const hospital = await Hospital.findById(req.hospitalId);
     if (!hospital) return res.status(404).json({ message: 'Hospital not found' });
     
     // Start cron job for the logged-in hospital
-    cron.schedule('* * * * *', async () => {
+    cron.schedule('0 * * * *', async () => {
         console.log(`Checking blood stock for hospital: ${hospital.hospitalName}`);
         const bloodStock = await BloodStock.findOne({ hospital: hospital._id });
         if (!bloodStock) {
