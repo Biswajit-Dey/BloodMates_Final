@@ -1,8 +1,12 @@
 const nodemailer = require('nodemailer');
 const Donour = require('../../Models/donourModel')
+const Hospital = require('../../Models/hospitalAuthority')
 
 const bloodReqControl = async (req, res)=>{
     console.log("Received data:", req.body);
+    const token = req.cookies.Bearer;
+    const validate = jwt.verify(token, process.env.JWT_SECRET);
+    let hospital = await Hospital.findOne({ hospitalEmail: validate.email });
     const {bloodGroup, donationDate, bloodAmount } = req.body;
     let donours = await Donour.find({bloodGroup})
     const emails = donours.map(donour => donour.email).join(', ');
