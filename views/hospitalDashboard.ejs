@@ -4,7 +4,8 @@
 
   <head>
     <meta charset="UTF-8" />
-    <title> Dashboard | BloodMate</title>
+    <title> Dashboard | <%= hospital.
+      hospitalName %></title>
 
     
     <style>
@@ -342,7 +343,8 @@
         <ul>
           <li><a href="#" class="logo">
               <img src="BloodPhotos/blood.png">
-              <span class="nav-item">Dashboard</span>
+              <span class="nav-item"><%= hospital.
+                hospitalName %></span>
             </a></li>
           <li><a href="#">
               <i class="fas fa-menorah"></i>
@@ -564,34 +566,26 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>01</td>
-                  <td>A+</td>
-                  <td>100ml</td>
-                  <td>03-24-22</td>
+                <% if(hospital.bloodRequests.length){ %>
+                  <% let i = 1 %>
+                  <% hospital.bloodRequests.forEach(request => { %>
+                    <tr>
+                        <td><%= i %></td>
+                        <td><%= request.bloodType %></td>
+                        <td><%= request.quantity %></td>
+                        <td><%= request.deadline %></td>
+                    </tr>
+                    <% i++ %>
+                <% }) %>
+                <% } %>
 
-                </tr>
                 <tr class="active">
-                  <td>02</td>
+                  <td>0</td>
                   <td>B+</td>
                   <td>200ml</td>
                   <td>03-24-22</td>
-
                 </tr>
-                <tr>
-                  <td>03</td>
-                  <td>O+</td>
-                  <td>200ml</td>
-                  <td>03-24-22</td>
 
-                </tr>
-                <tr>
-                  <td>04</td>
-                  <td>AB-</td>
-                  <td>500ml</td>
-                  <td>03-24-22</td>
-
-                </tr>
               </tbody>
             </table>
           </div>
@@ -666,11 +660,7 @@
     };
 
     // Send data to localhost:8000/hospital/donation
-<<<<<<< HEAD
     fetch("http://localhost/hospital/donation", {
-=======
-    fetch(`http://localhost:<%= port %>/hospital/donation`, {
->>>>>>> e130d3eea219a0f6f41a06d81fccb040a8d460eb
         method: "POST",
         headers: {
             "Content-Type": "application/json"

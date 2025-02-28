@@ -17,13 +17,11 @@ const hospitalSchema = new mongoose.Schema({
     },
     hospitalPhone1:{
         type: String,
-        required: true,
-        unique: true      
+        required: true,    
     },
     hospitalPhone2:{
         type: String,
-        required: true,
-        unique: true      
+        required: true,    
     },
     hospitalSuper:{
         type: String,
@@ -46,11 +44,12 @@ const hospitalSchema = new mongoose.Schema({
                 type : String,
             },
             quantity:{
-                type : Number,
-            },
-            location:{
                 type : String,
-            }
+            },
+            deadline:{
+                type : String,
+            },
+            _id: false 
         }
     ]
 })

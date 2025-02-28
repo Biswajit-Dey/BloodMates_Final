@@ -11,9 +11,7 @@ const hospitalDashboard = async(req, res)=>{
     // const validate = jwt.verify(token, process.env.JWT_SECRET);
     // const hospital = await Hospital.findOne({hospitalEmail: validate.email});
     // console.log(`from hospitalDashboard ${hospital}`)
-    res.render('hospitalDashboard',{port:PORT})
-    const hospital = await Hospital.findById(req.hospitalId);
-    if (!hospital) return res.status(404).json({ message: 'Hospital not found' });
+
     
     // Start cron job for the logged-in hospital
     cron.schedule('0 * * * *', async () => {
@@ -54,6 +52,10 @@ const hospitalDashboard = async(req, res)=>{
             }      
         });   
 })
+const hospital = await Hospital.findById(req.hospitalId);
+if (!hospital) return res.status(404).json({ message: 'Hospital not found' });
+res.render('hospitalDashboard',{port:PORT, hospital})
+
 }
 
 module.exports = hospitalDashboard;

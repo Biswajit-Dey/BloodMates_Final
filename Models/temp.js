@@ -16,18 +16,15 @@ const hospitalSchema = new mongoose.Schema({
     },
     hospitalPhone1:{
         type: String,
-        required: true,
-        unique: true     
+        required: true,   
     },
     hospitalPhone2:{
         type: String,
-        required: true,
-        unique: true      
+        required: true,    
     },
     hospitalSuper:{
         type: String,
-        required: true,
-        unique: true      
+        required: true,    
     },
     password:{
         type: String,
