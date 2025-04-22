@@ -54,7 +54,7 @@ const hospitalDashboard = async(req, res)=>{
 })
 const hospital = await Hospital.findById(req.hospitalId);
 if (!hospital) return res.status(404).json({ message: 'Hospital not found' });
-res.render('hospitalDashboard',{port:PORT, hospital})
+res.render('hospitalDashboard',{PORT, hospital})
 
 }
 
