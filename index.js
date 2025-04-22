@@ -68,6 +68,7 @@ app.use("/donour", DonourRoute)
 app.use("/hospital", HospitalRoute)
 app.use("/admin", AdminRoute)
 
+
 app.use((err, req, res, next) => {
     const { message = "Oh no Error!!!", status = 500 } = err;
     res.status(status).send(`${message}`);  
