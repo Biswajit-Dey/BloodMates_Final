@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Donation - Donor Registration</title>
+    <title>BloodMates Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -12,11 +12,12 @@
     let role = document.getElementById("role").value;
     let form = document.getElementById("loginForm");
 
-    if (role === "Donour") {
+    /*if (role === "donour") {
         form.action = "/donour/login";
-    } else if (role === "Hospital Authority") {
+    } else if (role === "hospital") {
         form.action = "/hospital/login";
-    }
+    }*/
+    form.action = `/${role}/login`;
 
     alert("Form action updated to: " + form.action);
 }
@@ -93,13 +94,14 @@
         <% } %>
     
     <div class="container w-50 mt-3">
-        <h2>Donor Login</h2>
+        <h2>Please Login</h2>
         <form id="loginForm" method="post" onsubmit="validateForm(event)">
 
             <select name="role" id="role" class="form-select" required>
                 <option disabled selected value="">---Select User---</option>
-                <option value="Donour">Donour</option>
-                <option value="Hospital Authority">Hospital Authority</option>
+                <option value="donour">Donour</option>
+                <option value="hospital">Hospital Authority</option>
+                <option value="admin">Admin</option>
             </select>
 
             <label for="email">Email</label>

@@ -8,7 +8,8 @@ const hospitalSchema = new mongoose.Schema({
     },
     hospitalReg:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     hospitalEmail:{
         type: String,
@@ -25,8 +26,7 @@ const hospitalSchema = new mongoose.Schema({
     },
     hospitalSuper:{
         type: String,
-        required: true,
-        unique: true      
+        required: true,     
     },
     password:{
         type: String,
@@ -37,6 +37,11 @@ const hospitalSchema = new mongoose.Schema({
         district: String,
         state: String,
         pincode: String
+    },
+    status:{
+        type: String,
+        default: "pending",
+        enum: ["pending", "approved", "rejected"]
     },
     bloodRequests:[
         {
@@ -49,15 +54,16 @@ const hospitalSchema = new mongoose.Schema({
             deadline:{
                 type : String,
             },
+            status:{
+                type : String,
+                default: "pending",
+                enum: ["pending", "donated", "revoked"]
+            },
             _id: false 
         }
     ]
 })
 
-hospitalSchema.pre("save", async function () {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-});
 
 const Hospital = mongoose.model("Hospital", hospitalSchema);
 

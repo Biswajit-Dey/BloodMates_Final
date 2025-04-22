@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bloodmates Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .sidebar-collapsed {
+      width: 4rem;
+    }
+
+    .sidebar-expanded {
+      width: 16rem;
+    }
+
+    .sidebar-transition {
+      transition: width 0.4s ease, background-color 0.4s ease;
+    }
+
+    .sidebar-text {
+      transition: opacity 0.3s ease;
+    }
+
+    .dropdown-transition {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: top;
+    }
+
+    .dropdown-hidden {
+      transform: scaleY(0);
+      opacity: 0;
+      pointer-events: none;
+      height: 0;
+    }
+
+    .dropdown-visible {
+      transform: scaleY(1);
+      opacity: 1;
+      height: auto;
+    }
+  </style>
+</head>
+<body class="flex min-h-screen bg-sky-100 text-gray-800">
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+         class="sidebar-expanded sidebar-transition bg-white shadow-lg p-4 flex flex-col items-start fixed top-0 left-0 h-full z-50">
+    <div class="flex items-center gap-2 mb-8">
+      <div class="text-red-600 font-extrabold text-2xl">🩸</div>
+      <h2 id="sidebarTitle" class="text-2xl font-bold text-red-600 sidebar-text">Bloodmates</h2>
+    </div>
+
+    <nav class="flex-1 w-full">
+      <ul class="space-y-4 text-sm font-semibold">
+        <li><a href="#" class="flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 transition-all"><span class="text-xl">📊</span><span class="sidebar-text">Dashboard</span></a></li>
+        <li><a href="#" class="flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 transition-all"><span class="text-xl">👥</span><span class="sidebar-text">Manage Users</span></a></li>
+        <li><a href="#" class="flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 transition-all"><span class="text-xl">🏥</span><span class="sidebar-text">Manage Hospitals</span></a></li>
+        <li><a href="#" class="flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 transition-all"><span class="text-xl">💉</span><span class="sidebar-text">Blood Requests</span></a></li>
+      </ul>
+    </nav>
+
+    <!-- Logout  -->
+<div class="mt-auto w-full">
+  <a href="/logout" 
+     class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-100 hover:text-red-600 transition-all group">
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         class="h-5 w-5 text-gray-400 group-hover:text-red-600 transition-all duration-200" 
+         fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v1" />
+    </svg>
+    <span class="sidebar-text text-sm font-semibold">Logout</span>
+  </a>
+</div>
+
+  </aside>
+
+  <!-- Main  -->
+  <main id="mainContent" class="ml-64 flex-1 p-8 transition-all duration-500 bg-sky-100 min-h-screen overflow-y-auto">
+    <h1 class="text-3xl font-bold mb-8">Admin Dashboard</h1>
+
+    <!--  Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+      <!-- Donors -->
+      <div>
+        <div onclick="toggleDropdown('donorsList', 'donorsCard')" id="donorsCard" class="p-5 bg-white shadow-md rounded-xl hover:bg-gray-100 cursor-pointer transition-all">
+          <p class="text-gray-600">Total Donors</p>
+          <h3 class="text-2xl font-semibold text-gray-900"> <%= totalDonours %> </h3>
+        </div>
+        <div id="donorsList" class="dropdown-transition dropdown-hidden bg-white border rounded-xl mt-2 p-4 shadow">
+          <ul class="list-disc ml-5 text-sm text-gray-700">
+            <% donours.forEach(element => { %>
+              <li> <%= element.firstname %> <%= element.lastname %> - <%= element.bloodGroup || "Null" %></li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Hospitals -->
+      <div>
+        <div onclick="toggleDropdown('hospitalsList', 'hospitalsCard')" id="hospitalsCard" class="p-5 bg-white shadow-md rounded-xl hover:bg-gray-100 cursor-pointer transition-all">
+          <p class="text-gray-600">Total Hospitals</p>
+          <h3 class="text-2xl font-semibold text-gray-900"><%= totalHospitals %></h3>
+        </div>
+        <div id="hospitalsList" class="dropdown-transition dropdown-hidden bg-white border rounded-xl mt-2 p-4 shadow">
+          <ol class="list-disc ml-5 text-sm text-gray-700">
+             <% hospitals.forEach(element => { %>
+                <li> <%= element.hospitalName %></li>               
+              <% }) %>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Requests -->
+      <div>
+        <div onclick="toggleDropdown('requestsList', 'requestsCard')" id="requestsCard" class="p-5 bg-white shadow-md rounded-xl hover:bg-gray-100 cursor-pointer transition-all">
+          <p class="text-gray-600">Total donation served</p>
+          <h3 class="text-2xl font-semibold text-gray-900">8</h3>
+        </div>
+        <div id="requestsList" class="dropdown-transition dropdown-hidden bg-white border rounded-xl mt-2 p-4 shadow">
+          <ul class="list-disc ml-5 text-sm text-gray-700">
+            <li>B+ - 500ml - Ruby Hospital</li>
+            <li>O- - 350ml - Apollo</li>
+            <li>A+ - 400ml - Fortis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blood  Table -->
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Hospital Joining Requests</h2>
+    <div class="bg-white shadow rounded-xl p-6 overflow-x-auto">
+      <table class="w-full text-sm text-left">
+        <thead class="text-gray-600 border-b">
+          <tr>
+            <th class="py-2 px-3">Hospital Name</th>
+            <th class="py-2 px-3">Location</th>
+            <th class="py-2 px-3">Email</th>
+            <th class="py-2 px-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-800">
+          <% pendingHospitals.forEach(element => { %>
+          <tr class="border-t hover:bg-gray-50">
+              <td class="py-2 px-3"> <%= element.hospitalName %></td>
+              <td class="py-2 px-3"> <%= element.address.district %>, <%= element.address.state %></td>
+              <td class="py-2 px-3"> <%= element.hospitalEmail %></td>
+              <td class="py-2 px-3 space-x-2">
+                <a href="/admin/approve?hid=<%= element.hospitalReg %>"><button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded" >Approve</button></a>
+                <a href="/admin/reject/?hid=<%= element.hospitalReg %>">
+                <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Reject</button></a>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script>
+    const sidebar = document.getElementById('sidebar');
+const mainContent = document.getElementById('mainContent');
+const textElements = sidebar.querySelectorAll('.sidebar-text');
+
+function collapseSidebar() {
+  sidebar.classList.remove('sidebar-expanded');
+  sidebar.classList.add('sidebar-collapsed');
+  textElements.forEach(el => el.style.opacity = '0');
+  mainContent.classList.remove('ml-64');
+  mainContent.classList.add('ml-16');
+}
+
+function expandSidebar() {
+  sidebar.classList.remove('sidebar-collapsed');
+  sidebar.classList.add('sidebar-expanded');
+  textElements.forEach(el => el.style.opacity = '1');
+  mainContent.classList.remove('ml-16');
+  mainContent.classList.add('ml-64');
+}
+
+mainContent.addEventListener('mouseenter', collapseSidebar);
+sidebar.addEventListener('mouseenter', expandSidebar);
+
+function toggleDropdown(listId, cardId) {
+  const allLists = ['donorsList', 'hospitalsList', 'requestsList'];
+  allLists.forEach(id => {
+    const el = document.getElementById(id);
+    if (id !== listId) {
+      el.classList.remove('dropdown-visible');
+      el.classList.add('dropdown-hidden');
+    }
+  });
+
+  const list = document.getElementById(listId);
+  const isOpen = list.classList.contains('dropdown-visible');
+  list.classList.toggle('dropdown-hidden', isOpen);
+  list.classList.toggle('dropdown-visible', !isOpen);
+}
+  </script>
+  <script>
+    function hospitalApprove(hospitalReg) {
+      console.log(`Action: ${action}, Hospital ID: ${hospitalId}`);
+      const url = `http://localhost/admin/approve?hid=${hospitalReg}`;
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ hospitalReg })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Action successful!');
+          location.reload(); // Reload the page to see the changes
+        } else {
+          alert('Action failed! Please try again.');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>

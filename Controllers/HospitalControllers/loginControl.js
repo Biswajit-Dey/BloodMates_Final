@@ -11,8 +11,18 @@ const authController = async (req, res, next)=>{
     // console.log(userid);
     if(!user){
         res.clearCookie('Bearer');
-        //req.flash("fail","Email or Password mismatched");
-        res.send("Email or password incorrect")
+        req.flash("fail","Email or Password mismatched");
+        res.redirect('loginForm')
+    }
+    else if(user.status == "pending"){
+        res.clearCookie('Bearer');
+        req.flash("fail","Your account is not approved yet");
+        res.redirect('/hospital/login')
+    }
+    else if(user.status == "rejected"){
+        res.clearCookie('Bearer');
+        req.flash("fail","Your account is rejected");
+        res.redirect('/hospital/login')
     }
     else{
        const valid = await bcrypt.compare(password, user.password);

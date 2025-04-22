@@ -2,6 +2,8 @@ const Hospital = require('../../Models/hospitalAuthority')
 const TempHospital = require('../../Models/temp')
 const AppError = require('../../Utils/AppError')
 const AsyncWrap = require('../../Utils/AsyncWrap')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const validateOtp = async (req, res) => {
     const value = req.body.otp;
@@ -17,7 +19,9 @@ const validateOtp = async (req, res) => {
     const hospitalPhone1 = temp.hospitalPhone1;
     const hospitalPhone2 = temp.hospitalPhone2;
     const hospitalSuper = temp.hospitalSuper;
-    const password = temp.password;
+    const pass = temp.password;
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(pass, salt);
     const address = temp.address;
     console.log(`0 ${id}`)
     //console.log(`actual OTP: ${actualOTP}, OTP Given: ${value}, user:${firstname}`);
@@ -41,7 +45,7 @@ const validateOtp = async (req, res) => {
         console.log(`2 ${id}`)
         await TempHospital.findByIdAndDelete(id)
         req.flash("fail", "OTP verification Unsuccesful")
-        throw new AppError("OTP verification Unsuccessful", 400);
+        res.redirect('/hospital/login')
     }
 }
 

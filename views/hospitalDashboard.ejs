@@ -37,12 +37,12 @@
         width: 90px;
         /* width: 280px; */
         background: #fff;
-        overflow: hidden;
+        overflow: auto;
         transition: 1s;
       }
 
       nav:hover {
-        width: 280px;
+        width: 45vh;
         transition: 1s;
       }
 
@@ -111,7 +111,7 @@
       /* MAin Section */
       .main {
         position: relative;
-        padding: 20px;
+        padding: 20px 20px 20px 20px;
         width: 100%;
       }
 
@@ -201,7 +201,7 @@
         padding: 10px;
         margin-top: 10px;
         background: #fff;
-        border-radius: 10px;
+        border-radius: 10px 10px 0px 0px;
         box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
       }
 
@@ -243,6 +243,13 @@
         border-bottom: 2px solid #d44a4a;
       }
 
+      .reqrow:hover {
+        background-color: rgb(255, 255, 255);
+        color: red;
+        font-weight: bold;
+        transition: .7s;
+      }
+
       .table button {
         padding: 6px 20px;
         border-radius: 10px;
@@ -255,6 +262,17 @@
         background: #d44a4a;
         color: #fff;
         transition: 0.5rem;
+      }
+
+      .map{
+        position: relative;
+        display: inline-block;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        border-radius: 10px;
+        width: 100%;
+        height: 40vh;
       }
 
 
@@ -325,10 +343,15 @@
         cursor: pointer;
         color: #333;
       }
+      #mapimg{
+          max-width: 100%;
+          height: auto;
+        }
     </style>
 
     <!-- <link rel="stylesheet" href="style.css" /> -->
     <!-- Font Awesome Cdn Link -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
@@ -563,38 +586,44 @@
                   <th>Blood Group</th>
                   <th>Quantity</th>
                   <th>Deadline</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                <% if(hospital.bloodRequests.length){ %>
-                  <% let i = 1 %>
-                  <% hospital.bloodRequests.forEach(request => { %>
-                    <tr>
-                        <td><%= i %></td>
-                        <td><%= request.bloodType %></td>
-                        <td><%= request.quantity %></td>
-                        <td><%= request.deadline %></td>
-                    </tr>
-                    <% i++ %>
-                <% }) %>
-                <% } %>
-
                 <tr class="active">
                   <td>0</td>
                   <td>B+</td>
                   <td>200ml</td>
                   <td>03-24-22</td>
+                  <td>Unknown</td>
                 </tr>
+                <% if(hospital.bloodRequests.length){ %>
+                  <% let i = 1 %>
+                  <% hospital.bloodRequests.forEach(request => { %>
+                    <tr class="reqrow">
+                        <td><%= i %></td>
+                        <td><%= request.bloodType %></td>
+                        <td><%= request.quantity %></td>
+                        <td><%= request.deadline %></td>
+                        <td><%= request.status || "Unknown" %></td>
+                    </tr>
+                    <% i++ %>
+                <% }) %>
+                <% } %>
+
+
 
               </tbody>
             </table>
           </div>
+          <!-- <img id="mapimg" src="\assets\images\slider\slide-02.jpg" alt="map" srcset=""> -->
+          <div id="map" class="map"></div>
         </section>
       </section>
-
-</div>
+      
+    </div>
     <!-- addmap -->
-    <div id="map" style="height: 50vh;"></div>
+    
   
     <script>
         var map = L.map('map').setView([20, 78], 5);
