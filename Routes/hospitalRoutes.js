@@ -18,8 +18,10 @@ const hospitalAddition = require('../Controllers/HospitalControllers/otpValidate
 const bloodReqController = require('../Controllers/HospitalControllers/bloodRequestControl');
 const hospitalAuthControl = require('../Middlewares/hospitalAuthControl');
 const bloodStock = require('../Controllers/HospitalControllers/bloodStock');
+const bloodReqView = require('../Controllers/HospitalControllers/bloodRequestPage')
 
 router.get('/dashboard',hospitalAuthControl, viewDashboardController)
+router.get('/blood-request', hospitalAuthControl, bloodReqView);
 router.get('/register',registerHospitalAutorityForm);
 router.get('/login',loginForm);
 router.get('/otpform',otpForm);
