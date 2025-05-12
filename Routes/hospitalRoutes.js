@@ -18,7 +18,8 @@ const hospitalAddition = require('../Controllers/HospitalControllers/otpValidate
 const bloodReqController = require('../Controllers/HospitalControllers/bloodRequestControl');
 const hospitalAuthControl = require('../Middlewares/hospitalAuthControl');
 const bloodStock = require('../Controllers/HospitalControllers/bloodStock');
-const bloodReqView = require('../Controllers/HospitalControllers/bloodRequestPage')
+const bloodReqView = require('../Controllers/HospitalControllers/bloodRequestPage');
+const updateStatus = require('../Controllers/HospitalControllers/updateStatus');
 
 router.get('/dashboard',hospitalAuthControl, viewDashboardController)
 router.get('/blood-request', hospitalAuthControl, bloodReqView);
@@ -34,5 +35,6 @@ router.get("/logout", (req, res) => {
     res.clearCookie('Bearer'); // Clear the session cookie
     res.redirect('/login'); // Redirect to the home page or login page
 })
+router.post('/update-status',updateStatus);
 
 module.exports = router

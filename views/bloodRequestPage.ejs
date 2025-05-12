@@ -29,11 +29,14 @@
             <td class="py-2 px-3"> <%= request.quantity %></td>
             <td class="py-2 px-3"><%= request.deadline %></td>
             <td class="py-2 px-3">
-              <select class="border rounded px-2 py-1">
-                <option <%= request.status === "pending" ? "selected" : "" %>>Pending</option>
-                <option <%= request.status === "donated" ? "selected" : "" %>>Done</option>
-                <option <%= request.status === "revoked" ? "selected" : "" %> >Revoked</option>
-              </select>
+              <select class="status-select border rounded px-2 py-1"
+              data-hospital-id="<%= hospital._id %>"
+              data-request-id="<%= request._id %>">
+        <option value='pending' <%= request.status === "pending" ? "selected" : "" %>>Pending</option>
+        <option value='donated' <%= request.status === "donated" ? "selected" : "" %>>Done</option>
+        <option value='revoked' <%= request.status === "revoked" ? "selected" : "" %>>Revoked</option>
+      </select>
+      
             </td>
             <% i++ %>
           </tr>
@@ -57,5 +60,29 @@
   </div>
 
   <a href="/hospital/dashboard" class="mt-6 inline-block text-blue-600 hover:underline">← Back to Dashboard</a>
+
+  <script>
+    document.querySelectorAll('.status-select').forEach(select => {
+      select.addEventListener('change', async function () {
+        const newStatus = this.value;
+        const hospitalId = this.dataset.hospitalId;
+        const requestId = this.dataset.requestId;
+  
+        const res = await fetch('http://localhost:80/hospital/update-status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ hospitalId, requestId, newStatus })
+        });
+  
+        const result = await res.json();
+        if (result.success) {
+          alert('Status updated!');
+        } else {
+          alert('Failed to update status');
+        }
+      });
+    });
+  </script>
+  
 </body>
 </html>
