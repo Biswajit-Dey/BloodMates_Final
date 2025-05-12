@@ -6,8 +6,8 @@ const authMiddleware = async(req, res, next) => {
     try {
       const token = req.cookies.Bearer;
       if (!token) {
-        //req.flash("fail","you need to login first");
-        res.send("Login token not found")
+        req.flash("fail","you need to login first");
+        res.redirect("/login")
       } else {
         const validate = jwt.verify(token, process.env.JWT_SECRET);
         // req.user=await User.findById(validate.userid)

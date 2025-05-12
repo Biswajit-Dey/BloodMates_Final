@@ -71,6 +71,11 @@ app.use("/donour", DonourRoute)
 app.use("/hospital", HospitalRoute)
 app.use("/admin", AdminRoute)
 
+app.get("*", (req, res) => {
+    res.status(404).render("index", { message: "Page Not Found" });
+  }
+)
+
 
 app.use((err, req, res, next) => {
     const { message = "Oh no Error!!!", status = 500 } = err;

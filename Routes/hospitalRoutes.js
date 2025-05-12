@@ -30,5 +30,9 @@ router.post('/register',addUser)//hostpital autority registration
 router.post('/login',loginUser);//hospital autority login
 router.post("/donation", bloodReqController);
 router.post('/add-blood-stock',hospitalAuthControl,bloodStock)
+router.get("/logout", (req, res) => {
+    res.clearCookie('Bearer'); // Clear the session cookie
+    res.redirect('/login'); // Redirect to the home page or login page
+})
 
 module.exports = router

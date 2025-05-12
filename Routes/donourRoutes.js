@@ -24,5 +24,10 @@ router.get("/login", loginForm)
 router.get("/profile", authControl, viewDonourProfile)
 router.post("/profile", donourProfileController)
 router.get("/view", viewDonourController)
+router.get("/logout", (req, res) => {
+        res.clearCookie('Bearer'); // Clear the session cookie
+        res.redirect('/login'); // Redirect to the home page or login page
+})
 
-module.exports = router
+
+module.exports = router;
