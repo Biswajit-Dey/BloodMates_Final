@@ -58,8 +58,7 @@ const hospitalSchema = new mongoose.Schema({
                 type : String,
                 default: "pending",
                 enum: ["pending", "donated", "revoked"]
-            },
-            _id: false 
+            }
         }
     ]
 })
